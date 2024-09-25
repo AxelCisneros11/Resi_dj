@@ -1,0 +1,12 @@
+
+{% extends 'mensajes/layout.html' %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button>
+        Editar Mensaje
+    </button>
+
+</form>
+    {% endblock %}

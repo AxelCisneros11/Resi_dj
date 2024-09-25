@@ -1,0 +1,16 @@
+
+{% extends 'mensajes/layout.html' %}
+{% block content %}
+    <h1>
+        Lista de mensajes
+    </h1>
+    <ul>
+    {% for mensaje in msj %}
+        <li>    
+            {{ mensaje }}
+            <button><a href="{% url 'msjEliminar' mensaje.id %}">Eliminar mensaje</a></button>
+            <button><a href="{% url 'msjEditar' mensaje.id %}">Editar mensaje</a></button>
+        </li>
+    {% endfor %}
+    </ul>
+    {% endblock %}
