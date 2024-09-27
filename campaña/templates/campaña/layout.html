@@ -12,13 +12,28 @@
             color: white; /* Color de texto blanco */
             padding: 20px; /* Espaciado interno */
         }
+        /* Estilo para el sidebar */
+        #sidebar {
+            height: 100vh; /* Altura completa de la ventana */
+            position: fixed; /* Fijo al lado izquierdo */
+            top: 0; /* Mantenerlo en la parte superior */
+            left: 0; /* Fijo a la izquierda */
+            width: 250px; /* Ancho del sidebar */
+            background-color: #f8f9fa; /* Color de fondo del sidebar */
+            padding: 20px;
+            overflow-y: auto; /* Scroll si es necesario */
+        }
+        /* Asegurar que el contenido principal no se superponga al sidebar */
+        main {
+            margin-left: 250px; /* Margen izquierdo igual al ancho del sidebar */
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <nav id="sidebar">
                 <div class="position-sticky">
                     <!-- Imagen añadida dentro del navbar -->
                     <img src="CFE-Suministrador-de-Servicios-Basicos-Logo-Vector.svg-.png" alt="Descripción de la imagen" class="img-fluid mb-3" style="max-height: 100px; width: auto;">
@@ -44,7 +59,7 @@
             </nav>
 
             <!-- Main content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <main>
                 <header class="header mb-4 text-center">
                     <h1>Bienvenido a la CFE App</h1>
                 </header>
