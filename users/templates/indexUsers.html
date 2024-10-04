@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h1 class="mb-4 text-center">Lista de mensajes</h1>
+    <div class="mb-3"> <!-- Elimina la clase text-end -->
+        <a href="{% url 'Signup' %}" class="btn btn-primary">Agregar Usuario</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped w-100">
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Username</th>
+                    <th class="text-center">Nombres</th>
+                    <th class="text-center">Apellidos</th>
+                    <th class="text-center">Corre</th>
+                    <th class="text-center">Zona</th>
+                    <th class="text-center">Division</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for users in msj %}
+                <tr>
+                    <td class="text-center">{{ users.id }}</td>
+                    <td class="text-center">{{ users.username }}</td> <!-- Mostrar la campaña -->
+                    <td class="text-center">{{ users.first_name }}</td> <!-- Mostrar el mensaje -->
+                    <td class="text-center">{{ users.last_name }}</td>
+                    <td class="text-center">{{ users.email }}</td> <!-- Mostrar la campaña -->
+                    <td class="text-center">{{ users.zona }}</td> <!-- Mostrar el mensaje -->
+                    <td class="text-center">{{ users.division }}</td> <!-- Mostrar el mensaje -->
+
+                    <td class="text-center">
+                        <button class="btn btn-warning">
+                            <a href="{% url 'editar' usersq.id %}" class="text-white text-decoration-none">Editar</a>
+                        </button>
+                        <button class="btn btn-danger">
+                            <a href="{% url 'eliminar' campaña.id %}" class="text-white text-decoration-none">Eliminar</a>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

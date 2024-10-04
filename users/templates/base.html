@@ -1,0 +1,189 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sidebar Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet"> <!-- Agregado para los íconos -->
+    <style>
+        /* Estilo para el sidebar */
+        #sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            background-color: #ffffff;
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        #sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        /* Estilo para los enlaces del sidebar */
+        .nav-link {
+            color: #495057;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 10px;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+        .nav-link:hover {
+            background-color: #28a745; /* Color verde al pasar el ratón */
+            color: #fff;
+        }
+
+        /* Posiciona el botón de ocultar menú en la parte inferior del sidebar */
+        #hideSidebarLink {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #hideSidebarLink:hover {
+            background-color: #c82333; /* Rojo más oscuro al hacer hover */
+        }
+
+        /* Estilo para el botón de mostrar el sidebar */
+        #showSidebar {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #28a745; /* Verde */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 15px;
+            display: none;
+            z-index: 1001;
+            transition: background-color 0.3s ease;
+        }
+        #showSidebar:hover {
+            background-color: #218838; /* Verde más oscuro al hacer hover */
+        }
+
+        /* Ajuste del contenido principal cuando el sidebar está visible o no */
+        .main-content {
+            margin-left: 250px;
+            height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+        .main-content.shifted {
+            margin-left: 0;
+        }
+
+        .header {
+            background-color: #00843D; /* Color verde de CFE */
+            color: white; /* Texto blanco para mayor contraste */
+            padding: 20px; /* Espaciado interno */
+        }
+
+        /* Estilo para la barra de búsqueda */
+        .search-bar {
+            background-color: #f1f3f5;
+            border: 1px solid #ced4da;
+            border-radius: 15px;
+            padding: 5px 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            background-color: transparent;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="position-sticky">
+                <img class="mb-4" src="{% static 'img/logo.jpeg' %}" alt="Logo CFE" width="200" height="50" >
+                
+                <!-- Barra de búsqueda -->
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar en el menú..." aria-label="Buscar en el menú">
+                </div>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-house-door-fill"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">
+                            <i class="bi bi-bullseye"></i> Campaña
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-envelope-fill"></i> Enviar Mensajes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-graph-up"></i> Monitoreo
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="hideSidebarLink">
+                            <i class="bi bi-arrow-left-circle"></i> Ocultar Menú
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="main-content">
+            <header class="header mb-4 text-center">
+                <h1>Bienvenido a la CFE App</h1>
+            </header>
+            <div>
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Botón para mostrar el menú -->
+    <button id="showSidebar" class="btn btn-success"> <i class="bi bi-arrow-left-circle"></i> Mostrar Menú </button>
+
+    <script>
+        // Selecciona los elementos del DOM
+        const sidebar = document.getElementById('sidebar');
+        const hideSidebarLink = document.getElementById('hideSidebarLink');
+        const showSidebarButton = document.getElementById('showSidebar');
+        const mainContent = document.querySelector('.main-content');
+
+        // Ocultar el sidebar cuando se hace clic en "Ocultar Menú"
+        hideSidebarLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            sidebar.classList.add('hidden');
+            mainContent.classList.add('shifted');
+            showSidebarButton.style.display = 'block'; // Muestra el botón de mostrar
+        });
+
+        // Mostrar el sidebar cuando se hace clic en el botón "Mostrar Menú"
+        showSidebarButton.addEventListener('click', () => {
+            sidebar.classList.remove('hidden');
+            mainContent.classList.remove('shifted');
+            showSidebarButton.style.display = 'none'; // Oculta el botón de mostrar
+        });
+    </script>
+</body>
+</html>
